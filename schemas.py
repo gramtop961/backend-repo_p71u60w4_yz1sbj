@@ -11,7 +11,7 @@ Model name is converted to lowercase for the collection name:
 - BlogPost -> "blogs" collection
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 from typing import Optional
 
 # Example schemas (replace with your own):
@@ -37,6 +37,20 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Music app schemas
+class Track(BaseModel):
+    """
+    Track collection schema
+    Collection name: "track"
+    """
+    title: str = Field(..., description="Track title")
+    artist: str = Field(..., description="Artist name")
+    audio_url: HttpUrl = Field(..., description="Public URL to the audio file (mp3)")
+    cover_url: Optional[HttpUrl] = Field(None, description="Cover image URL")
+    duration: Optional[float] = Field(None, ge=0, description="Duration in seconds")
+    likes: int = Field(0, ge=0, description="Number of likes")
+    play_count: int = Field(0, ge=0, description="Number of plays")
 
 # Add your own schemas here:
 # --------------------------------------------------
